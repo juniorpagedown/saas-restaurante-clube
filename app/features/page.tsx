@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { Navbar } from '@/components/navbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'

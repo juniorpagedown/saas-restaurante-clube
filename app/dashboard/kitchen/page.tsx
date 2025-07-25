@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { DashboardLayoutWithSidebar } from '@/components/dashboard-layout-with-sidebar';
 
 export default function KitchenPage() {

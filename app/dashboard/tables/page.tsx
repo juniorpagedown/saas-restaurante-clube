@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { redirect } from 'next/navigation'
 import { getUserContext, requireAuth, requireCompany, requireRole } from '@/lib/auth-utils'
 import { db } from '@/lib/db'

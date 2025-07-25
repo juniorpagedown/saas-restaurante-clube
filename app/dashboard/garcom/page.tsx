@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getUserContext } from '@/lib/auth-utils'
 import { DashboardLayoutWithSidebar } from '@/components/dashboard-layout-with-sidebar'
 import { OrdersList } from '@/components/orders-list'
