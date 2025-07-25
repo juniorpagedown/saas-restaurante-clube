@@ -57,7 +57,7 @@ export function OrderForm({ tableId, tableNumber, onOrderCreated, onClose }: Ord
             if (!res.ok) return
             const data = await res.json()
             setCompanyId(data?.company?.id || null)
-        } catch (err) {
+        } catch {
             setCompanyId(null)
         }
     }

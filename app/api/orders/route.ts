@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     keysToDelete.forEach(key => recentOrders.delete(key))
 
     // Calcula o total do pedido
-    const total = items.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0)
+    const total = items.reduce((sum: number, item: { price: number; quantity: number }) => sum + (item.price * item.quantity), 0)
 
     console.log('Criando pedido:', { tableId, companyId, customerName, total, itemsCount: items.length })
 
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
         status: 'open',
         total,
         items: {
-          create: items.map((item: any) => ({
+          create: items.map((item: { productId: string; quantity: number; price: number; notes?: string }) => ({
             productId: item.productId,
             quantity: item.quantity,
             price: item.price,

@@ -13,7 +13,7 @@ export default async function OnboardingPage() {
 
   // Verificar se usuário já tem empresa
   const user = await db.user.findUnique({
-    where: { email: session.user?.email! },
+    where: { email: session.user?.email || '' },
     include: { company: true }
   })
 

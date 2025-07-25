@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { DashboardLayoutWithSidebar } from '@/components/dashboard-layout-with-sidebar'
 import { OrderForm } from '@/components/order-form'
 
@@ -26,9 +26,9 @@ export default function NewOrderPage() {
 
 function NewOrderPageContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
   const tableId = searchParams.get('table')
   const [table, setTable] = useState<Table | null>(null)
+  
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

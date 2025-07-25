@@ -1,7 +1,5 @@
 import { redirect } from 'next/navigation'
 import { getUserContext } from '@/lib/auth-utils'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { DashboardLayoutWithSidebar } from '@/components/dashboard-layout-with-sidebar'
 import { UsersManager } from '@/components/users-manager'
 import { db } from '@/lib/db'

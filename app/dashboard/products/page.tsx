@@ -12,7 +12,7 @@ export default async function ProductsPage() {
   if (!session) redirect('/api/auth/signin')
 
   const user = await db.user.findUnique({
-    where: { email: session.user?.email! },
+    where: { email: session.user?.email || '' },
     include: {
       company: {
         include: {

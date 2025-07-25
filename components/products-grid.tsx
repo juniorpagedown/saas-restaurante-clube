@@ -31,7 +31,6 @@ interface ProductsGridProps {
 
 export function ProductsGrid({ products }: ProductsGridProps) {
   const [filter, setFilter] = useState('all')
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
   const categories = Array.from(new Set(products.map(p => p.category)))
 
