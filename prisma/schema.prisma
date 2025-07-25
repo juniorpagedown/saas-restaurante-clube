@@ -1,0 +1,250 @@
+model ComandaFechada {
+  id             String            @id @default(cuid())
+  orderId        String            @unique
+  valorTotal     Float
+  dataFechamento DateTime          @default(now())
+  responsavelId  String
+  companyId      String
+  observacoes    String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  order          Order             @relation(fields: [orderId], references: [id])
+  responsavel    User              @relation(fields: [responsavelId], references: [id])
+  company        Company           @relation(fields: [companyId], references: [id])
+  pagamentos     PagamentoComanda[]
+  mesa           Table?            @relation(fields: [mesaId], references: [id])
+  mesaId         String?
+
+  @@index([dataFechamento])
+  @@index([responsavelId])
+  @@index([companyId])
+}
+
+model PagamentoComanda {
+  id              String        @id @default(cuid())
+  comandaFechada  String
+  formaPagamento  String        // 'dinheiro', 'cartao', 'pix', 'vale', etc.
+  valor           Float
+  createdAt       DateTime      @default(now())
+  comanda         ComandaFechada @relation(fields: [comandaFechada], references: [id], onDelete: Cascade)
+
+  @@index([formaPagamento])
+  @@index([createdAt])
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                   String                    @id @default(cuid())
+  name                 String?
+  email                String                    @unique
+  emailVerified        DateTime?
+  image                String?
+  plan                 String                    @default("free")
+  stripeCustomerId     String?
+  subscriptionId       String?
+  subscriptionStatus   String?
+  companyId            String?
+  role                 String                    @default("user")
+  isActive             Boolean                   @default(true)
+  isSaasAdmin          Boolean                   @default(false)
+  createdAt            DateTime                  @default(now())
+  updatedAt            DateTime                  @updatedAt
+  accounts             Account[]
+  sessions             Session[]
+  company              Company?                  @relation(fields: [companyId], references: [id])
+  notificationSettings UserNotificationSettings?
+  comandasFechadas     ComandaFechada[]
+}
+
+model Company {
+  id                 String            @id @default(cuid())
+  name               String
+  segment            String
+  plan               String            @default("free")
+  email              String?
+  phone              String?
+  address            String?
+  stripeCustomerId   String?
+  subscriptionId     String?
+  subscriptionStatus String?
+  maxTables          Int               @default(10)
+  maxUsers           Int               @default(5)
+  maxProducts        Int               @default(50)
+  settings           String?
+  isActive           Boolean           @default(true)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  entries            Entry[]
+  notificationLogs   NotificationLog[]
+  orders             Order[]
+  products           Product[]
+  tables             Table[]
+  users              User[]
+  comandasFechadas   ComandaFechada[]
+}
+
+model Table {
+  id              String           @id @default(cuid())
+  number          Int
+  capacity        Int              @default(4)
+  status          String           @default("available")
+  companyId       String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  orders          Order[]
+  company         Company          @relation(fields: [companyId], references: [id])
+  comandasFechadas ComandaFechada[]
+
+  @@unique([companyId, number])
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  category    String
+  image       String?
+  isActive    Boolean     @default(true)
+  companyId   String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+  company     Company     @relation(fields: [companyId], references: [id])
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  tableId      String?
+  customerName String?
+  status       String      @default("open")
+  total        Float       @default(0)
+  companyId    String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  company      Company     @relation(fields: [companyId], references: [id])
+  table        Table?      @relation(fields: [tableId], references: [id])
+  items        OrderItem[]
+  comandaFechada ComandaFechada?
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  quantity  Int
+  price     Float
+  notes     String?
+  status    String   @default("pending")
+  orderId   String
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
+}
+
+model Entry {
+  id           String    @id @default(cuid())
+  visitorName  String
+  visitorCpf   String?
+  visitorPhone String?
+  category     String
+  hasPaid      Boolean   @default(false)
+  entryTime    DateTime  @default(now())
+  exitTime     DateTime?
+  companyId    String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  company      Company   @relation(fields: [companyId], references: [id])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model UserNotificationSettings {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  soundEnabled       Boolean  @default(true)
+  soundVolume        Float    @default(0.7)
+  newOrderSound      Boolean  @default(true)
+  readySound         Boolean  @default(true)
+  urgentSound        Boolean  @default(true)
+  cancelSound        Boolean  @default(true)
+  showToasts         Boolean  @default(true)
+  urgentHighlight    Boolean  @default(true)
+  animateNew         Boolean  @default(true)
+  showTimers         Boolean  @default(true)
+  autoRefreshEnabled Boolean  @default(true)
+  refreshInterval    Int      @default(30)
+  warningThreshold   Int      @default(15)
+  criticalThreshold  Int      @default(30)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model NotificationLog {
+  id           String    @id @default(cuid())
+  type         String
+  companyId    String
+  level        String
+  message      String
+  metadata     String?
+  orderId      String?
+  itemId       String?
+  userId       String?
+  delivered    Boolean   @default(false)
+  readAt       DateTime?
+  latency      Int?
+  deviceInfo   String?
+  connectionId String?
+  eventName    String?
+  errorDetails String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  company      Company   @relation(fields: [companyId], references: [id])
+
+  @@index([companyId, createdAt])
+  @@index([orderId])
+  @@index([userId, createdAt])
+  @@index([type])
+  @@index([level])
+  @@index([connectionId])
+}

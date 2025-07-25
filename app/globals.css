@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* === DESIGN SYSTEM 2025 - SLATE ELEGANCE === */
+    
+    /* Cores Primárias */
+    --primary: 220 13% 18%;              /* #1E293B - Slate escuro elegante */
+    --primary-foreground: 0 0% 98%;      /* #FAFAFA - Branco quente */
+    
+    /* Cores Secundárias */
+    --secondary: 215 25% 27%;            /* #334155 - Slate médio */
+    --secondary-foreground: 220 13% 91%; /* #E2E8F0 - Cinza claro */
+    
+    /* Backgrounds */
+    --background: 0 0% 100%;             /* #FFFFFF - Branco puro */
+    --foreground: 220 13% 18%;           /* #1E293B - Texto principal */
+    --surface: 220 14% 96%;              /* #F8FAFC - Branco azulado */
+    --surface-hover: 215 16% 94%;        /* #F1F5F9 - Hover sutil */
+    
+    /* Cards e Popovers */
+    --card: 220 14% 96%;                 /* #F8FAFC - Surface */
+    --card-foreground: 220 13% 18%;      /* #1E293B - Texto principal */
+    --popover: 0 0% 100%;                /* #FFFFFF - Branco puro */
+    --popover-foreground: 220 13% 18%;   /* #1E293B - Texto principal */
+    
+    /* Estados Muted e Accent */
+    --muted: 215 16% 94%;                /* #F1F5F9 - Muted background */
+    --muted-foreground: 215 16% 47%;     /* #64748B - Texto secundário */
+    --accent: 262 83% 58%;               /* #8B5CF6 - Roxo moderno */
+    --accent-foreground: 0 0% 98%;       /* #FAFAFA - Branco quente */
+    
+    /* Estados de Erro */
+    --destructive: 0 84% 60%;            /* #EF4444 - Vermelho moderno */
+    --destructive-foreground: 0 0% 98%;  /* #FAFAFA - Branco quente */
+    
+    /* Bordas e Inputs */
+    --border: 220 13% 91%;               /* #E2E8F0 - Borda padrão */
+    --input: 220 13% 91%;                /* #E2E8F0 - Input border */
+    --ring: 220 13% 18%;                 /* #1E293B - Focus ring */
+    
+    /* Design Tokens Customizados */
+    --color-success: 142 71% 45%;        /* #10B981 - Verde moderno */
+    --color-success-bg: 142 76% 94%;     /* #ECFDF5 - Fundo verde */
+    --color-warning: 38 92% 50%;         /* #F59E0B - Âmbar */
+    --color-warning-bg: 48 96% 89%;      /* #FFFBEB - Fundo âmbar */
+    --color-info: 217 91% 60%;           /* #3B82F6 - Azul informativo */
+    --color-info-bg: 214 95% 93%;        /* #DBEAFE - Fundo azul */
+    
+    /* Raio de Borda */
+    --radius: 0.5rem;                    /* 8px - Moderno mas não excessivo */
+  }
+
+  .dark {
+    /* === MODO ESCURO - SLATE ELEGANCE === */
+    
+    /* Cores Primárias */
+    --primary: 220 13% 91%;              /* #E2E8F0 - Cinza claro */
+    --primary-foreground: 220 13% 18%;   /* #1E293B - Escuro */
+    
+    /* Cores Secundárias */
+    --secondary: 215 25% 84%;            /* #CBD5E1 - Cinza médio */
+    --secondary-foreground: 220 13% 18%; /* #1E293B */
+    
+    /* Backgrounds */
+    --background: 224 71% 4%;            /* #0F172A - Azul escuro profundo */
+    --foreground: 220 13% 91%;           /* #E2E8F0 - Texto claro */
+    --surface: 220 13% 18%;              /* #1E293B - Surface elevado */
+    --surface-hover: 215 25% 27%;        /* #334155 - Hover */
+    
+    /* Cards e Popovers */
+    --card: 220 13% 18%;                 /* #1E293B - Surface escuro */
+    --card-foreground: 220 13% 91%;      /* #E2E8F0 - Texto claro */
+    --popover: 220 13% 18%;              /* #1E293B - Surface escuro */
+    --popover-foreground: 220 13% 91%;   /* #E2E8F0 - Texto claro */
+    
+    /* Estados Muted e Accent */
+    --muted: 215 25% 27%;                /* #334155 - Muted escuro */
+    --muted-foreground: 215 16% 71%;     /* #94A3B8 - Texto secundário */
+    --accent: 262 83% 68%;               /* #A855F7 - Roxo mais claro */
+    --accent-foreground: 224 71% 4%;     /* #0F172A - Fundo escuro */
+    
+    /* Estados de Erro */
+    --destructive: 0 84% 60%;            /* #EF4444 - Vermelho */
+    --destructive-foreground: 220 13% 91%; /* #E2E8F0 - Texto claro */
+    
+    /* Bordas e Inputs */
+    --border: 215 25% 27%;               /* #334155 - Borda escura */
+    --input: 215 25% 27%;                /* #334155 - Input border */
+    --ring: 220 13% 91%;                 /* #E2E8F0 - Focus ring claro */
+    
+    /* Design Tokens Customizados para Escuro */
+    --color-success: 142 71% 45%;        /* #10B981 - Verde */
+    --color-success-bg: 142 84% 8%;      /* #022C22 - Fundo verde escuro */
+    --color-warning: 38 92% 50%;         /* #F59E0B - Âmbar */
+    --color-warning-bg: 48 100% 8%;      /* #1F1611 - Fundo âmbar escuro */
+    --color-info: 217 91% 60%;           /* #3B82F6 - Azul */
+    --color-info-bg: 214 100% 8%;        /* #0F1419 - Fundo azul escuro */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Animações para notificações */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.animate-slide-out-right {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+/* Animação para itens urgentes */
+@keyframes urgentPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.animate-urgent-pulse {
+  animation: urgentPulse 2s infinite;
+}
+
+/* Animação para destacar item */
+@keyframes highlightPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.highlight-pulse {
+  animation: highlightPulse 1s ease-in-out;
+}
+
+/* Animações para fade in/out */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
