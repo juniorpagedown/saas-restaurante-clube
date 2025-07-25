@@ -8,6 +8,8 @@ const nextConfig = {
   experimental: {
     esmExternals: true,
   },
+  // Desabilita static generation completamente
+  output: 'standalone',
 }
 
 module.exports = nextConfig
