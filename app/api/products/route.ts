@@ -113,7 +113,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { searchParams } = new URL(req.url)
+    const { searchParams } = new URL(req.url || 'http://localhost')
     const productId = searchParams.get('id')
 
     if (!productId) {

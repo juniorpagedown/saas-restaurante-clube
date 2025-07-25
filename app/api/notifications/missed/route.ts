@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Obter parâmetros da requisição
-    const url = new URL(req.url)
+    const url = new URL(req.url || 'http://localhost')
     const sinceParam = url.searchParams.get('since')
     const limit = parseInt(url.searchParams.get('limit') || '50')
 

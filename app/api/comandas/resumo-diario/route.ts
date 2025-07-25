@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       }, { status: 403 })
     }
 
-    const { searchParams } = new URL(req.url)
+    const { searchParams } = new URL(req.url || 'http://localhost')
     const data = searchParams.get('data') || new Date().toISOString().split('T')[0]
 
     // Definir o range de datas para o dia

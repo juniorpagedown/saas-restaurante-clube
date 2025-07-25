@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const url = new URL(req.url)
+    const url = new URL(req.url || 'http://localhost')
     const action = url.searchParams.get('action')
 
     switch (action) {

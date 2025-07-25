@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       }, { status: 403 })
     }
 
-    const { searchParams } = new URL(req.url)
+    const { searchParams } = new URL(req.url || 'http://localhost')
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '20')
     const dataInicio = searchParams.get('dataInicio')
